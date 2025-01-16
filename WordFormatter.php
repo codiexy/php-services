@@ -129,7 +129,7 @@ class WordFormatter
             $string .= implode(' ', $words);
         }
 
-        return capitalize_each_words($string);
+        return $this->capitalize_each_words($string);
     }
 
     /**
@@ -138,5 +138,18 @@ class WordFormatter
     public function __toString()
     {
         return $this->convert($this->number);
+    }
+
+    /**
+     * Capitalize each word of the given string.
+     *
+     * @param  string  $string
+     * @return string
+     */
+    public function capitalize_each_words(string $string) {
+        // Capitalize the first letter of each word, including hyphen-separated words
+        return implode(' ', array_map(function($word) {
+            return implode('-', array_map('ucfirst', explode('-', $word)));
+        }, explode(' ', strtolower($string))));
     }
 }
